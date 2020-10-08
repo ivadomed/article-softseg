@@ -1,0 +1,159 @@
+{
+    "command": "train",
+    "gpu": [0, 1],
+    "log_directory": "/home/anlemj/projects/def-jcohen/anlemj/ms_brain_results/ms",
+    "model_name": "ms_brain",
+    "debugging": true,
+    "object_detection_params": {
+        "object_detection_path": null
+    },
+    "loader_parameters": {
+        "bids_path": "/home/anlemj/projects/def-jcohen/anlemj/ms_brain",
+        "target_suffix": [
+            "_seg-manual0"
+        ],
+        "roi_params": {
+            "suffix": null,
+            "slice_filter_roi": null
+        },
+        "contrast_params": {
+            "training_validation": [
+                "FLAIR",
+                "ce-T1w",
+                "PD",
+                "T1w",
+                "T2w"
+            ],
+            "testing": [
+                "FLAIR",
+                "ce-T1w",
+                "PD",
+                "T1w",
+                "T2w"
+            ],
+            "balance": {},
+            "contrast_lst": [
+                "FLAIR",
+                "ce-T1w",
+                "PD",
+                "T1w",
+                "T2w"
+            ]
+        },
+        "slice_filter_params": {
+            "filter_empty_mask": false,
+            "filter_empty_input": true
+        },
+        "slice_axis": "axial",
+        "multichannel": true,
+        "soft_gt": true
+    },
+    "split_dataset": {
+        "fname_split": null,
+        "random_seed": 1313,
+        "center_test": [],
+	"balance": "disability",
+        "method": "per_patient",
+        "train_fraction": 0.6,
+        "test_fraction": 0.2
+    },
+    "training_parameters": {
+        "batch_size": 24,
+        "loss": {
+            "name": "DiceLoss"
+        },
+        "training_time": {
+            "num_epochs": 200,
+            "early_stopping_patience": 50,
+            "early_stopping_epsilon": 0.001
+        },
+        "scheduler": {
+            "initial_lr": 5e-05,
+            "lr_scheduler": {
+                "name": "CosineAnnealingLR",
+                "base_lr": 1e-05,
+                "max_lr": 0.01
+            }
+        },
+        "balance_samples": false,
+        "mixup_alpha": null,
+        "transfer_learning": {
+            "retrain_model": null,
+            "retrain_fraction": 1.0
+        }
+    },
+    "default_model": {
+        "name": "Unet",
+        "dropout_rate": 0.3,
+        "bn_momentum": 0.9,
+        "depth": 4,
+        "relu": false,
+        "folder_name": "ms_brain",
+        "in_channel": 5,
+        "out_channel": 1
+    },
+    "testing_parameters": {
+        "binarize_prediction": -1,
+        "uncertainty": {
+            "epistemic": false,
+            "aleatoric": false,
+            "n_it": 0
+        }
+    },
+    "evaluation_parameters": {
+        "targetSize": {
+            "unit": "vox",
+            "thr": [
+                20,
+                100
+            ]
+        },
+        "removeSmall": {
+            "unit": "vox",
+            "thr": 3
+        },
+        "overlap": {
+            "unit": "vox",
+            "thr": 3
+        }
+    },
+    "transformation": {
+        "Resample": {
+            "wspace": 1,
+            "hspace": 1,
+            "dspace": 1,
+            "preprocessing": true
+        },
+        "CenterCrop": {
+            "size": [
+                160,
+                224
+            ],
+            "preprocessing": true
+        },
+        "RandomAffine": {
+            "degrees": 20,
+            "scale": [
+                0.1,
+                0.1
+            ],
+            "translate": [
+                0.03,
+                0.03
+            ],
+            "applied_to": [
+                "im",
+                "gt"
+            ],
+            "dataset_type": [
+                "training"
+            ]
+        },
+        "NumpyToTensor": {},
+        "NormalizeInstance": {
+            "applied_to": [
+                "im"
+            ]
+        }
+    }
+}
