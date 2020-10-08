@@ -1,0 +1,14 @@
+{
+   "loader_parameters": {
+      "soft_gt": [true, false]
+    },
+    "training_parameters": {
+        "loss": [{"name": "DiceLoss"}, {"name": "AdapWingLoss", "epsilon": 1, "theta": 0.5, "omega": 8, "alpha": 2.1}]
+    },
+   "default_model": {
+	"relu": [true, false]
+   },
+   "split_dataset": {
+	"center_test": [["unf"], ["zurich"], ["vanderbilt"], ["ucl"]]
+   }
+}

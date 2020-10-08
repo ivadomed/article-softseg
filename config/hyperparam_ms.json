@@ -1,0 +1,12 @@
+{
+   "loader_parameters": {
+      "soft_gt": [true, false],
+      "loss": [
+         {"name": "AdapWingLoss", "theta": 0.5, "alpha": 2.1, "epsilon": 1, "omega": 8},
+         {"name": "DiceLoss"}]
+    },
+    "default_model": {
+        "relu": [true, false]
+    }
+}
+
